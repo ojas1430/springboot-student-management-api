@@ -16,7 +16,7 @@ public class SpringConfig {
             "/login",
             "/css/**",
             "/images/**",
-            ".js/**",
+            "/.js/**",
             "/error"
     };
 
@@ -25,6 +25,7 @@ public class SpringConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(PUBLIC_PATH).permitAll()
