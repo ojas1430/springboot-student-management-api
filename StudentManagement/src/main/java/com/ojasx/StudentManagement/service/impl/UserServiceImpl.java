@@ -1,4 +1,4 @@
-package com.ojasx.StudentManagement.service;
+package com.ojasx.StudentManagement.service.impl;
 
 import com.ojasx.StudentManagement.model.Users;
 import com.ojasx.StudentManagement.repository.UserRepository;
