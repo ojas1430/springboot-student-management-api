@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thyme.leaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div th:replace="~{fragments/layout :: head}"></div>
 
@@ -10,6 +10,7 @@
             <h2 class="mb-1 fw-bold"><i class="bi bi-mortarboard-fill me-2"></i>SMS</h2>
             <p class="mb-0 opacity-75">Student Management System</p>
         </div>
+
         <div class="card-body p-4 p-md-5">
             <h4 class="text-center mb-4 fw-bold text-dark">Welcome Back</h4>
             <form th:action="@{/login}" method="post">
