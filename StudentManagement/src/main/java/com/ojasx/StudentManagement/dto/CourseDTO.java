@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 
 public class CourseDTO {
 
+    private Long id;
+
+
     @NotBlank(message = "Course Name is required.")
     @Size(max = 150,message = "Max of 150 characters allowed.")
     private String courseName;
@@ -82,5 +85,13 @@ public class CourseDTO {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
