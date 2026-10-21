@@ -36,9 +36,11 @@ public class CourseController {
     }
 
     @GetMapping("/list")
-    public String listCourses(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "5") int size ,
-                              Model model){
+    public String listCourses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size ,
+            Model model
+    ){
         log.info("Get /course/ showing create course page");
         Page<CourseDTO> courses = courseService.getCourses(page , size);
         model.addAttribute("courses",courses);

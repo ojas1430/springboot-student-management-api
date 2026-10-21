@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/layout :: head}"></div>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar}"></div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <!-- Navbar -->
+            <div th:replace="~{fragments/layout :: navbar}"></div>
+
+            <div class="container-fluid px-4 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Add New Student</h2>
+                    <a th:href="@{/students/list}" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back to
+                        List</a>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <i class="bi bi-person-plus me-1"></i> Student Details
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/students/save}" method="post" th:object="${studentDTO}">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="e.g. John"
+                                           th:field="*{firstName}" th:errorclass="is-invalid" required>
+                                    <div class="invalid-feedback" th:errors="*{firstName}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="e.g. Doe"
+                                        th:field="*{lastName}" th:errorclass="is-invalid" required>
+                                    <div class="invalid-feedback" th:errors="*{lastName}"></div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email"
+                                        placeholder="e.g. john.doe@example.com" th:field="*{email}" th:errorclass="is-invalid" required>
+                                    <div class="invalid-feedback" th:errors="*{email}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone"
+                                        placeholder="e.g. +1 234 567 8900" th:field="*{phoneNumber}">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea class="form-control" id="address" rows="3" th:field="*{address}" th:errorclass="is-invalid"
+                                    placeholder="Enter full address..."></textarea>
+                                <div class="invalid-feedback" th:errors="*{address}"></div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button type="reset" class="btn btn-light me-2">Reset</button>
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save
+                                    Student</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>
