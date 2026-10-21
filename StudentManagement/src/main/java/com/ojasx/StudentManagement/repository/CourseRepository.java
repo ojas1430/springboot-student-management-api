@@ -10,4 +10,7 @@ public interface CourseRepository extends JpaRepository<Courses,Long> {
     boolean existsByCourseCodeIgnoreCase(String code);
 
     Page<Courses > findByActiveTrue(Pageable pageable);
+
+    boolean existsByCourseCodeIgnoreCaseAndIdNot(String code,Long id);
+
 }

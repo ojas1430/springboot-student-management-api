@@ -43,6 +43,13 @@ public class CourseServiceImpl implements CourseService  {
     }
 
     @Override
+    public boolean existsByCourseCodeAndIdNot(String code, Long id) {
+
+        return courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(code,id);
+    }
+
+    @Override
+    @Transactional
     public Page<CourseDTO> getCourses(int page, int size) {
         log.info("list of courses from: {}", page);
 
@@ -54,5 +61,23 @@ public class CourseServiceImpl implements CourseService  {
 
         return courseRepository.findByActiveTrue(pageRequest)
                 .map(course -> mapper.map(course, CourseDTO.class));
+    }
+
+    @Override
+    @Transactional
+    public CourseDTO getCourseById(Long id) {
+        Courses course = courseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No Course Found"));
+        return mapper.map(course,CourseDTO.class);
+    }
+
+    @Override
+    public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
+        Courses course = courseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No Course Found"));
+
+        mapper.map(courseDTO,course);
+        Courses updated = courseRepository.save(course);
+        return mapper.map(updated,CourseDTO.class);
     }
 }

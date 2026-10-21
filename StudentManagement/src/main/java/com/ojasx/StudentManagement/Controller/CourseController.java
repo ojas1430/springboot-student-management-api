@@ -69,4 +69,44 @@ public class CourseController {
         return "redirect:/course/list";
 
     }
+
+    @GetMapping("/{id}")
+    public String getCourseById(@PathVariable Long id,Model model){
+        CourseDTO course =  courseService.getCourseById(id);
+        model.addAttribute("course",course);
+        return "view-course";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editCourse(@PathVariable Long id,Model model){
+        CourseDTO course =  courseService.getCourseById(id);
+        model.addAttribute("courseDTO",course);
+        return "edit-course";
+    }
+
+    @PostMapping("/{id}/update")
+    public String updateCourse(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("courseDTO") CourseDTO courseDTO,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ){
+        log.info("post /{id}/update - update course request received");
+
+        if (bindingResult.hasErrors()) {
+            log.error("post /{id}/update - page return due to validation error");
+            return "edit-course";
+        }
+        if (courseService.existsByCourseCodeAndIdNot(courseDTO.getCourseCode(), id)) {
+            log.error("post /{id}/update - Code must be unique");
+            bindingResult.rejectValue("courseCode","Code must be unique");
+            return "edit-course";
+        }
+        courseService.updateCourse(id,courseDTO);
+        redirectAttributes.addAttribute("message","Course udpated Succssfully");
+        log.error("post /{id}/update - course updated successfully");
+        return "redirect:/course/list";
+
+    }
 }

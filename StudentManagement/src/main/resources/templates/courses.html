@@ -90,14 +90,14 @@
                                 </td>
 
                                 <td>
-                                    <a th:href="@{/course/view/{id}(id=${course.id})}"
+                                    <a th:href="@{'/course/' + ${course.id}}"
                                        class="btn btn-sm btn-info text-white me-1"
                                        title="View">
                                         <i class="bi bi-eye"></i>
                                     </a>
 
-                                    <a th:href="@{/course/edit/{id}(id=${course.id})}"
-                                       class="btn btn-sm btn-warning text-white me-1"
+                                    <a
+                                       th:href="@{'/course/' + ${course.id} + '/edit' }" class="btn btn-sm btn-warning text-white me-1"
                                        title="Edit">
                                         <i class="bi bi-pencil"></i>
                                     </a>

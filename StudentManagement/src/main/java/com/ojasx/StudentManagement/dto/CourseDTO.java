@@ -30,6 +30,16 @@ public class CourseDTO {
 
     private LocalDateTime createdAt;
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean active;
+
 
     public @NotNull(message = "Course Code is required.") String getCourseCode() {
         return getCourseCode;
