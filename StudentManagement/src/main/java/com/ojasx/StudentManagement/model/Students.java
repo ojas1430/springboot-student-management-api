@@ -71,8 +71,9 @@ public class Students {
         return email;
     }
 
-    public void setEmail(String emailAddress) {
-        this.email = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
+        this.emailAddress = email;
     }
 
     public String getPhoneNumber() {

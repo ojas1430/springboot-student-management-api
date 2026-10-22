@@ -1,6 +1,5 @@
 package com.ojasx.StudentManagement.Controller;
 
-import com.ojasx.StudentManagement.dto.CourseDTO;
 import com.ojasx.StudentManagement.dto.StudentDTO;
 import com.ojasx.StudentManagement.service.StudentService;
 import jakarta.validation.Valid;
@@ -39,8 +38,10 @@ public class StudentController {
             @RequestParam(defaultValue = "5") int size ,
             Model model
             ) {
-        log.info("Get /course/ showing create course page");
-        Page<StudentDTO> students = studentService.getStudents(page , size);
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.min(Math.max(size, 1), 100);
+        log.info("GET /students/list - page {}", safePage);
+        Page<StudentDTO> students = studentService.getStudents(safePage, safeSize);
         model.addAttribute("students",students);
         return "students";
     }
@@ -65,6 +66,39 @@ public class StudentController {
         redirectAttributes.addAttribute("message","Student is added successfully");
         return "redirect:/students/list";
 
+    }
+
+    @GetMapping("/{id}")
+    public String getStudentById(@PathVariable Long id,Model model){
+        StudentDTO student =  studentService.getStudentById(id);
+        model.addAttribute("student",student);
+        return "view-student";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String showEditStudent(@PathVariable Long id, Model model) {
+        model.addAttribute("studentDTO", studentService.getStudentById(id));
+        return "edit-student";
+    }
+
+    @PostMapping("/{id}/update")
+    public String updateStudent(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("studentDTO") StudentDTO studentDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "edit-student";
+        }
+        if (studentService.existsByEmailIgnoreCaseAndIdNot(studentDTO.getEmail(), id)) {
+            bindingResult.rejectValue("email", "duplicate", "Email must be unique");
+            return "edit-student";
+        }
+
+        studentService.updateStudent(id, studentDTO);
+        redirectAttributes.addFlashAttribute("message", "Student updated successfully");
+        return "redirect:/students/list";
     }
 
 

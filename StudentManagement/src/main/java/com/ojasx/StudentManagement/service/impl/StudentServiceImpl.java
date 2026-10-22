@@ -1,6 +1,5 @@
 package com.ojasx.StudentManagement.service.impl;
 
-import com.ojasx.StudentManagement.dto.CourseDTO;
 import com.ojasx.StudentManagement.dto.StudentDTO;
 import com.ojasx.StudentManagement.model.Students;
 import com.ojasx.StudentManagement.repository.StudentRepository;
@@ -63,7 +62,35 @@ public class StudentServiceImpl implements StudentService {
         );
 
         return studentRepository.findByActiveTrue(pageRequest)
-                .map(course -> mapper.map(course, StudentDTO.class));
+                .map(student -> mapper.map(student, StudentDTO.class));
     }
+
+    @Override
+    public StudentDTO getStudentById(Long id) {
+        Students students = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No Student Found"));
+        return mapper.map(students,StudentDTO.class);
+    }
+
+    @Override
+    public boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id) {
+        return studentRepository.existsByEmailIgnoreCaseAndIdNot(email, id);
+    }
+
+    @Override
+    public StudentDTO updateStudent(Long id, StudentDTO studentDTO) {
+        Students student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No Student Found"));
+
+        student.setFirstName(studentDTO.getFirstName());
+        student.setLastName(studentDTO.getLastName());
+        student.setEmail(studentDTO.getEmail());
+        student.setPhoneNumber(studentDTO.getPhoneNumber());
+        student.setAddress(studentDTO.getAddress());
+        student.setActive(studentDTO.isActive());
+
+        return mapper.map(studentRepository.save(student), StudentDTO.class);
+    }
+
 
 }
