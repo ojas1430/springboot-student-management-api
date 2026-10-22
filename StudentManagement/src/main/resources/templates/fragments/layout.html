@@ -1,4 +1,4 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head">
@@ -18,7 +18,7 @@ x<!DOCTYPE html>
 <body>
 
 <!-- Sidebar Fragment -->
-<div th:fragment="sidebar" class="bg-dark text-white" id="sidebar-wrapper">
+<div th:fragment="sidebar" id="sidebar-wrapper">
 
     <div class="sidebar-heading border-bottom border-secondary p-3">
         <i class="bi bi-mortarboard-fill me-2"></i>
@@ -47,9 +47,9 @@ x<!DOCTYPE html>
             Students
         </a>
 
-        <a th:href="@{/enroll-course}" class="sidebar-link">
+        <a th:href="@{/enrollments}" class="sidebar-link">
             <i class="bi bi-check2-square me-2"></i>
-            Enroll to Course
+            Enrollments
         </a>
 
         <a th:href="@{/logout}"
